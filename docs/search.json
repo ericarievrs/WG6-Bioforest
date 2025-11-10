@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "WG6 Bioforest Analyses",
+    "section": "",
+    "text": "Welcome 🌿\nThis is the website for WG6 Bioforest analysis outputs.\nUse the navigation bar to explore the analyses."
+  },
+  {
+    "objectID": "testquarto.html",
+    "href": "testquarto.html",
+    "title": "exampleplotCWM",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "testquarto.html#quarto",
+    "href": "testquarto.html#quarto",
+    "title": "exampleplotCWM",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "testquarto.html#running-code",
+    "href": "testquarto.html#running-code",
+    "title": "exampleplotCWM",
+    "section": "Running Code",
+    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  },
+  {
+    "objectID": "analyses/smoothing_test.html",
+    "href": "analyses/smoothing_test.html",
+    "title": "Smoothing",
+    "section": "",
+    "text": "library(mgcv); library(data.table); library(gratia); library(marginaleffects); library(ggplot2); library(dplyr); library(tidyr); library(zoo); library(slider)\n#####test Paracou####\nobs &lt;- read.csv(“G:/My Drive/cesab bioforest/Data/aggregated_data_v9.csv”)\nsetDT(obs)\nobs=obs[obs$Site==“Paracou”]\nunique(obs$Plot)\nsetnames(obs, “Plot”, “subplot”)\nobs\\(plot=gsub(\"_.\", \"\",obs\\)subplot )\nobs &lt;- obs[!Year%in%1984:1990]\nobs &lt;- dcast( obs, subplot + plot + Year ~ variable, value.var = “value” )"
+  },
+  {
+    "objectID": "analyses/smoothing_test.html#quarto",
+    "href": "analyses/smoothing_test.html#quarto",
+    "title": "Smoothing",
+    "section": "Quarto",
+    "text": "Quarto\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "analyses/smoothing_test.html#running-code",
+    "href": "analyses/smoothing_test.html#running-code",
+    "title": "Smoothing",
+    "section": "Running Code",
+    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  },
+  {
+    "objectID": "exempleplot.html",
+    "href": "exempleplot.html",
+    "title": "example plot: Interaction effects between VPD, CWM, and Treatment on Tree Growth",
+    "section": "",
+    "text": "Code\n# Load required packages\nlibrary(data.table)\nlibrary(ggplot2)\nlibrary(effects)\n\n\nLoading required package: carData\n\n\nlattice theme set by effectsTheme()\nSee ?effectsTheme for details.\n\n\nCode\nlibrary(interactions)\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ lubridate 1.9.4     ✔ tibble    3.3.0\n✔ purrr     1.1.0     ✔ tidyr     1.3.1\n\n\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::between()     masks data.table::between()\n✖ dplyr::filter()      masks stats::filter()\n✖ dplyr::first()       masks data.table::first()\n✖ lubridate::hour()    masks data.table::hour()\n✖ lubridate::isoweek() masks data.table::isoweek()\n✖ dplyr::lag()         masks stats::lag()\n✖ dplyr::last()        masks data.table::last()\n✖ lubridate::mday()    masks data.table::mday()\n✖ lubridate::minute()  masks data.table::minute()\n✖ lubridate::month()   masks data.table::month()\n✖ lubridate::quarter() masks data.table::quarter()\n✖ lubridate::second()  masks data.table::second()\n✖ purrr::transpose()   masks data.table::transpose()\n✖ lubridate::wday()    masks data.table::wday()\n✖ lubridate::week()    masks data.table::week()\n✖ lubridate::yday()    masks data.table::yday()\n✖ lubridate::year()    masks data.table::year()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\n# Set random seed for reproducibility\nset.seed(123)\n\ndat &lt;- data.frame(\nTreat = factor(rep(c(\"Control\", \"Disturbed\"), each = 60))\n)\n\ndat$CWM &lt;- runif(120, 2, 5)\ndat$VPD &lt;- runif(120, 1, 3)\n\n# Define growth with different VPD sensitivity\ndat$growth &lt;- ifelse(dat$Treat == \"Disturbed\",\n                     5 + 1.2*dat$CWM - 1.5*dat$VPD + rnorm(60, 0, 0.5),  # disturbed: strong VPD effect\n                     5 + 1.2*dat$CWM - 0.5*dat$VPD + rnorm(60, 0, 0.5))  # control: weaker VPD effect\nhead(dat)\n\n\n    Treat      CWM      VPD    growth\n1 Control 2.862733 2.295787  6.755723\n2 Control 4.364915 1.639641 10.049670\n3 Control 3.226931 1.615440  7.889772\n4 Control 4.649052 1.439535  9.426339\n5 Control 4.821402 1.738978  9.798054\n6 Control 2.136669 2.968438  5.981196\n\n\nCode\nmodel &lt;- lm(growth ~ VPD * CWM * Treat, data = dat)\nsummary(model)\n\n\n\nCall:\nlm(formula = growth ~ VPD * CWM * Treat, data = dat)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-1.14081 -0.30153 -0.04961  0.21521  1.49263 \n\nCoefficients:\n                       Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)             4.82076    1.06599   4.522 1.53e-05 ***\nVPD                    -0.63005    0.50524  -1.247    0.215    \nCWM                     1.25820    0.28895   4.354 2.97e-05 ***\nTreatDisturbed         -1.08060    1.62275  -0.666    0.507    \nVPD:CWM                 0.03089    0.13908   0.222    0.825    \nVPD:TreatDisturbed     -0.61872    0.79041  -0.783    0.435    \nCWM:TreatDisturbed      0.42336    0.44033   0.961    0.338    \nVPD:CWM:TreatDisturbed -0.16524    0.21611  -0.765    0.446    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.4724 on 112 degrees of freedom\nMultiple R-squared:  0.933, Adjusted R-squared:  0.9288 \nF-statistic: 222.7 on 7 and 112 DF,  p-value: &lt; 2.2e-16\n\n\nCode\nplot(allEffects(model))\n\n\n\n\n\n\n\n\n\nCode\ninteract_plot(model, pred = \"VPD\", modx = \"CWM\", plot.points = FALSE) +\ntheme_minimal(base_size = 14)\n\n\n\n\n\n\n\n\n\nCode\ninteract_plot(model,\npred = VPD,\nmodx = CWM,\nmod2 = Treat,\nmodx.values = \"plus-minus\",\nplot.points = FALSE,\ninterval = FALSE) +\ntheme_minimal(base_size = 14)"
+  }
+]

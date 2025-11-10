@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "WG6 Bioforest Analyses"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Analyses"
+        menu:
+          - text: "Smoothing Test"
+            href: analyses/smoothing_test.qmd
+          - text: "CWM Interaction Example"
+            href: analyses/interactions_growth.qmd
+    right:
+      - icon: github
+        href: https://github.com/ericarievrs/WG6-Bioforest
+
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-location: left
+    code-fold: true

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Erica RB">
 
-<title>WG6 Bioforest Analyses</title>
+<title>Smoothing – WG6 Bioforest Analyses</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +21,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-cc63fce9873912f1bbbccf05079cc9ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-cc63fce9873912f1bbbccf05079cc9ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +104,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -78,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">WG6 Bioforest Analyses</span>
     </a>
   </div>
@@ -89,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -98,11 +163,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-analyses">    
         <li>
-    <a class="dropdown-item" href="./analyses/smoothing_test.html">
+    <a class="dropdown-item" href="../analyses/smoothing_test.html">
  <span class="dropdown-text">Smoothing Test</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./analyses/interactions_growth.qmd">
+    <a class="dropdown-item" href="../analyses/interactions_growth.qmd">
  <span class="dropdown-text">CWM Interaction Example</span></a>
   </li>  
     </ul>
@@ -129,7 +194,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome 🌿</a></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link active" data-scroll-target="#quarto">Quarto</a></li>
+  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
   </ul>
 </nav>
 </nav>
@@ -142,13 +208,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">WG6 Bioforest Analyses</h1>
+<h1 class="title">Smoothing</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Erica RB </p>
+          </div>
+  </div>
     
   
     
@@ -159,10 +231,129 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome" class="level1">
-<h1>Welcome 🌿</h1>
-<p>This is the website for WG6 Bioforest analysis outputs.<br>
-Use the navigation bar to explore the analyses.</p>
+<p>library(mgcv); library(data.table); library(gratia); library(marginaleffects); library(ggplot2); library(dplyr); library(tidyr); library(zoo); library(slider)</p>
+<p>#####test Paracou####</p>
+<p>obs &lt;- read.csv(“G:/My Drive/cesab bioforest/Data/aggregated_data_v9.csv”)</p>
+<p>setDT(obs)</p>
+<p>obs=obs[obs$Site==“Paracou”]</p>
+<p>unique(obs$Plot)</p>
+<p>setnames(obs, “Plot”, “subplot”)</p>
+<p>obs<span class="math inline">\(plot=gsub("_.", "",obs\)</span>subplot )</p>
+<p>obs &lt;- obs[!Year%in%1984:1990]</p>
+<p>obs &lt;- dcast( obs, subplot + plot + Year ~ variable, value.var = “value” )</p>
+<section id="upload-data" class="level5">
+<h5 class="anchored" data-anchor-id="upload-data">upload data</h5>
+<p>load(“clim_by_site.rda”)</p>
+<p>clim_all=rbindlist(lapply(clim_by_site[[“Paracou”]], function(x) x$climate[[1]]), idcol = “plot”) #which period to consider the anomalies? Here I take the from 1977 (the oldest inventory date among all sites considered)</p>
+<p>#“Paracou”, “Mbaiki”, “Corinto”, “SUAS”, “Lesong”, “Ulu Muda”, “Sungai Lalang”, “Tene”, “Jari”</p>
+<p>clim_stats &lt;- clim_all[, .( mean_tmax = mean(tmax), sd_tmax = sd(tmax), mean_vpd = mean(vpd), sd_vpd = sd(vpd), mean_srad = mean(srad), sd_srad = sd(srad), mean_def = mean(def), sd_def = sd(def) ), by = .(plot, month)]</p>
+<p>clim_all &lt;- merge(clim_all, clim_stats, by = c(“plot”, “month”), all.x = TRUE)</p>
+<p>clim_all[, <code>:=</code>( z_tmax = (tmax - mean_tmax) / sd_tmax, z_vpd = (vpd - mean_vpd) / sd_vpd, z_srad = (srad - mean_srad) / sd_srad, z_def = (def - mean_def) / sd_def )]</p>
+<p>#climate anomalies follow inventories. For Paracou, mean per year before 1996, two years after</p>
+<p>clim_all[, year_bin := ifelse(year &lt;= 1995, year, # keep original year 1997 + ((year - 1996) %/% 2) * 2 # 2-year bins )]</p>
+<p>census_anom &lt;- clim_all[,.( mean_z_tmax = mean(z_tmax, na.rm = TRUE), mean_z_vpd = mean(z_vpd, na.rm = TRUE), mean_z_srad = mean(z_srad, na.rm = TRUE), mean_z_def = mean(z_def, na.rm = TRUE) ), by = .(plot, year_bin)]</p>
+<p>#AGB values before 1991 are not consistent census_anom=census_anom[year_bin&gt;=1991]</p>
+<p>unique(census_anom<span class="math inline">\(plot)
+unique(obs\)</span>plot)</p>
+<p>merged &lt;- merge( obs, census_anom, by.x = c(“Year”,“plot”), by.y=c(“year_bin”,“plot”) )</p>
+<p>control=c(1,6,11,13,14,15)</p>
+<p>merged<span class="math inline">\(Treatment &lt;- ifelse(merged\)</span>plot %in% control, “control”, “disturbed”)</p>
+<p>control=merged[Treatment==“control”,]</p>
+<p>disturbed=merged[Treatment==“disturbed”,]</p>
+<p>merged<span class="math inline">\(Treatment &lt;- factor(merged\)</span>Treatment) disturbed<span class="math inline">\(plot &lt;- factor(disturbed\)</span>plot) disturbed<span class="math inline">\(subplot &lt;- factor(disturbed\)</span>subplot)</p>
+<p>######fit trajectory only ####GAM</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% mutate( fitted_GAM5 = predict( gam(agb ~ s(Year, k = 5), data = cur_data()), newdata = cur_data() ) ) %&gt;% ungroup()</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% mutate( fitted_GAM8 = predict( gam(agb ~ s(Year, k = 8), data = cur_data()), newdata = cur_data() ) )%&gt;% ungroup()</p>
+<p>p1=ggplot(disturbed, aes(x = Year, y = fitted_GAM5, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“GAM-k=5”) + theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_GAM5)</p>
+<p>p1.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_GAM5)) + geom_point() + ggtitle(“GAM residuals”)</p>
+<p>p1 + p1.1</p>
+<p>p11=ggplot(disturbed, aes(x = Year, y = fitted_GAM8, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“GAM-k=8”) + theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_GAM8)</p>
+<p>p11.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_GAM8)) + geom_point() + ggtitle(“GAM residuals”)</p>
+<p>p11 + p11.1</p>
+<p>#####rolling average</p>
+<p>#to remove NAs</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% arrange(Year) %&gt;% mutate(fitted_rollmean2 = zoo::rollapply( agb, width = 2, FUN = mean, align = “center”, fill = NA, partial = TRUE #uses data to avoid NA ))%&gt;% ungroup()</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% arrange(Year) %&gt;% mutate(fitted_rollmean5 = zoo::rollapply( agb, width = 5, FUN = mean, align = “center”, fill = NA, partial = TRUE # ))%&gt;% ungroup()</p>
+<p>p2=ggplot(disturbed, aes(x = Year, y = fitted_rollmean2, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“rollmean - k=2 align =centre”) + theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_rollmean2)</p>
+<p>p2.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_rollmean2)) + geom_point() + ggtitle(“rollmean residuals”)</p>
+<p>p2 + p2.1</p>
+<p>p22=ggplot(disturbed, aes(x = Year, y = fitted_rollmean5, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“rollmean - k=5 align =centre”) + theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_rollmean5)</p>
+<p>p22.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_rollmean5)) + geom_point() + ggtitle(“rollmean residuals”)</p>
+<p>p22 + p22.1</p>
+<p>###slider</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% arrange(Year) %&gt;% mutate(fitted_slide = slide_dbl(agb, mean, .before = 2, .after = 2))%&gt;% ungroup()</p>
+<p>p3=ggplot(disturbed, aes(x = Year, y = fitted_slide, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“slide - .before = 2, .after = 2”)+ theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_slide)</p>
+<p>p3.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_slide)) + geom_point() + ggtitle(“slide residuals”)</p>
+<p>p3 + p3.1</p>
+<p>#polynome</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% mutate(fitted_poly2 = predict(lm(agb ~ poly(Year, 2), data = cur_data())))%&gt;% ungroup()</p>
+<p>p4=ggplot(disturbed, aes(x = Year, y = fitted_poly2, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“Quad poly”)+ theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_poly2)</p>
+<p>p4.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_poly2)) + geom_point() + ggtitle(“Poly residuals”)</p>
+<p>p4 + p4.1</p>
+<p>#loess</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% mutate(fitted_LOESS0.75 = predict(loess(agb ~ Year, data = cur_data(), span = 0.75)))%&gt;% ungroup()</p>
+<p>disturbed &lt;- disturbed %&gt;% group_by(subplot) %&gt;% mutate(fitted_LOESS0.5 = predict(loess(agb ~ Year, data = cur_data(), span = 0.5)))%&gt;% ungroup()</p>
+<p>p5=ggplot(disturbed, aes(x = Year, y = fitted_LOESS0.75, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“LOESS - 0.75”)+ theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_LOESS0.75)</p>
+<p>p5.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_LOESS0.75)) + geom_point() + ggtitle(“LOESS residuals”)</p>
+<p>p5 + p5.1</p>
+<p>p55=ggplot(disturbed, aes(x = Year, y = fitted_LOESS0.5, color = subplot)) + geom_line(size = 1) + # predicted trajectory geom_point(data = disturbed, aes(x = Year, y = agb, color = subplot), inherit.aes = FALSE, size = 2) + # observed points theme_bw() + labs(x = “Year”, y = “AGB”, title=“LOESS - 0.05”)+ theme(legend.position = “none”)</p>
+<p>plot(disturbed<span class="math inline">\(agb, disturbed\)</span>fitted_LOESS0.5)</p>
+<p>p55.1 &lt;- ggplot(disturbed, aes(Year, agb - fitted_LOESS0.5)) + geom_point() + ggtitle(“LOESS residuals”)</p>
+<p>p55 + p55.1</p>
+<p>names(disturbed)</p>
+<p>#root mean square error</p>
+<p>rmse_results &lt;- disturbed %&gt;% group_by(subplot) %&gt;% summarise( RMSE_GAM8 = sqrt(mean((agb - fitted_GAM8)^2)), RMSE_GAM5 = sqrt(mean((agb - fitted_GAM5)^2)), RMSE_ROLLMEAN2 = sqrt(mean((agb - fitted_rollmean2)^2)), RMSE_ROLLMEAN5 = sqrt(mean((agb - fitted_rollmean5)^2)), RMSE_SLIDE = sqrt(mean((agb - fitted_slide)^2)), RMSE_LOESS0.75 = sqrt(mean((agb - fitted_LOESS0.75)^2)), RMSE_LOESS0.5 = sqrt(mean((agb - fitted_LOESS0.5)^2)), RMSE_PolyQuad = sqrt(mean((agb - fitted_poly2)^2)) ) %&gt;% ungroup()</p>
+<p>rmse_results &lt;- rmse_results %&gt;% mutate( best_method = colnames(.)[ apply(select(., -subplot), 1, which.min) + 1 ] )</p>
+<p>as.data.table(rmse_results)</p>
+<p>vars &lt;- grep(“^fitted_”, names(disturbed), value = TRUE)</p>
+<p>for (v in vars) { cat(v, “”) print(summary(lm(as.formula(paste0(v, ” - agb ~ Year”)), data = disturbed))) }</p>
+<p>vars &lt;- grep(“^fitted_”, names(disturbed), value = TRUE)</p>
+<p>results &lt;- data.frame( method = vars, intercept = NA, slope = NA, p_value = NA )</p>
+<p>for (i in seq_along(vars)) {</p>
+<p>v &lt;- vars[i] model &lt;- lm(as.formula(paste0(v, ” - agb ~ Year”)), data = disturbed) s &lt;- summary(model)</p>
+<p>results<span class="math inline">\(intercept[i] &lt;- coef(s)[1, 1]
+  results\)</span>slope[i] &lt;- coef(s)[2, 1] results$p_value[i] &lt;- coef(s)[2, 4] }</p>
+<p>results</p>
+<p>pairwise_corr_for &lt;- function(df, colname) {</p>
+<p>wide &lt;- df %&gt;% select(subplot, Year, value = all_of(colname)) %&gt;% filter(!is.na(value)) %&gt;% pivot_wider(names_from = subplot, values_from = value)</p>
+<p>M &lt;- as.matrix(wide[ , -1]) # drop Year column</p>
+<p>C &lt;- cor(M, use = “pairwise.complete.obs”)</p>
+<p>mean(C[upper.tri(C)], na.rm = TRUE) # average off-diagonal correlations }</p>
+<p>methods &lt;- c( “fitted_GAM5”, “fitted_GAM8”, “fitted_rollmean2”, “fitted_rollmean5”, “fitted_slide”, “fitted_LOESS0.75”, “fitted_LOESS0.5”, “fitted_poly2” )</p>
+<p>mean_corr &lt;- sapply(methods, function(m) pairwise_corr_for(disturbed, m)) temporal_signal &lt;- data.frame( method = methods, mean_pairwise_corr = mean_corr ) temporal_signal &lt;- temporal_signal[order(-temporal_signal$mean_pairwise_corr), ]</p>
+<p>temporal_signal</p>
+<hr>
+</section>
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+</section>
+<section id="running-code" class="level2">
+<h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
+<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>You can add options to executable code like this</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
 
 
 </section>
