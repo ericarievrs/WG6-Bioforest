@@ -1,0 +1,66 @@
+---
+title: "Simple GAM Smoothing"
+format: html
+---
+
+```{r}
+library(mgcv)
+library(data.table)
+library(gratia)
+library(marginaleffects)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(zoo)
+library(slider)
+
+load("disturbed_smooth_models.rda")   # Make sure this file is in your project directory
+
+disturbed <- as.data.table(disturbed)
+
+
+disturbed <- disturbed %>%
+group_by(subplot) %>%
+mutate(
+fitted_GAM5 = predict(
+gam(agb ~ s(Year, k = 5), data = cur_data()),
+newdata = cur_data()
+)
+) %>%
+ungroup()
+
+
+disturbed <- disturbed %>%
+group_by(subplot) %>%
+mutate(
+fitted_GAM8 = predict(
+gam(agb ~ s(Year, k = 8), data = cur_data()),
+newdata = cur_data()
+)
+) %>%
+ungroup()
+
+
+p1 <- ggplot(disturbed, aes(x = Year, y = fitted_GAM5, color = subplot)) +
+geom_line(size = 1) +
+geom_point(data = disturbed,
+aes(x = Year, y = agb, color = subplot),
+inherit.aes = FALSE, size = 2) +
+theme_bw() +
+labs(x = "Year", y = "AGB", title = "GAM-k=5") +
+theme(legend.position = "none")
+
+p1
+
+
+p1.1 <- ggplot(disturbed, aes(Year, agb - fitted_GAM5)) +
+geom_point() +
+ggtitle("GAM residuals (k = 5)")
+
+p1.1
+
+
+p1 + p1.1
+
+
+
