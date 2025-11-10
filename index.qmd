@@ -1,0 +1,10 @@
+---
+title: "WG6 Bioforest Analyses"
+format: html
+---
+
+# Welcome 🌿
+
+This is the website for WG6 Bioforest analysis outputs.  
+Use the navigation bar to explore the analyses.
+
