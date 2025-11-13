@@ -10,14 +10,15 @@ website:
         href: index.html
       - text: "Analyses"
         menu:
-          - text: "Simple Smoothing"
-            href: analyses/test2.html  
+          - text: "GAM smoothing"
+            href: analyses/test2.html
     right:
       - icon: github
         href: https://github.com/ericarievrs/WG6-Bioforest
 
 format:
   html:
+    self-contained: true
     theme: flatly
     toc: true
     toc-location: left
