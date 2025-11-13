@@ -7,13 +7,11 @@ website:
   navbar:
     left:
       - text: "Home"
-        href: index.qmd
+        href: index.html
       - text: "Analyses"
         menu:
-          - text: "Smoothing Test"
-            href: analyses/smoothing_test.qmd
-          - text: "CWM Interaction Example"
-            href: analyses/interactions_growth.qmd
+          - text: "Simple Smoothing"
+            href: analyses/test2.html  
     right:
       - icon: github
         href: https://github.com/ericarievrs/WG6-Bioforest
