@@ -10,7 +10,7 @@ website:
         href: index.html
       - text: "Analyses"
         menu:
-          - text: "GAM smoothing"
+          - text: "smoothing"
             href: analyses/test2.html
     right:
       - icon: github
@@ -18,7 +18,6 @@ website:
 
 format:
   html:
-    self-contained: true
     theme: flatly
     toc: true
     toc-location: left
