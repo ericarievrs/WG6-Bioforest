@@ -1,0 +1,208 @@
+---
+title: "Full Models"
+format:
+  html:
+    self-contained: true
+---
+
+## GAM - Control
+
+```{r}
+#| message: false
+#| warning: false
+
+
+
+library(mgcv); library(data.table); library(gratia); library(marginaleffects); library(ggplot2); library(dplyr); library(tidyr); library(zoo); library(slider)
+
+load("control.rda")
+
+control$subplot=as.factor(control$subplot)
+
+
+
+```
+
+## model fits a separate smooth of Year for each subplot, but with a shared smoothing penalty (so all subplots borrow information from each other).
+## AND tests whether the rate or shape of AGB change through time varies with temperature
+
+
+```{r}
+#| message: false
+#| warning: false
+
+mod_fs <- gam(
+  agb ~ s(Year, subplot, bs = "fs", k = 8) + s(Year, by=mean_z_tmax, k = 8),
+  data = control,
+  method = "REML"
+)
+
+gam.check(mod_fs)
+#edf=130 for k′=192 → moderately smooth, not overfitting.
+#If k-index were < 1 and p < 0.05, it would mean you underfitted (too low k).
+
+
+summary(mod_fs)
+
+draw(mod_fs)
+
+
+```
+## GAM - Disturbed
+
+```{r}
+#| message: false
+#| warning: false
+
+load("disturbed_smooth_models.rda")
+
+mod_fs_d <- gam(
+  agb ~ s(Year, subplot, bs = "fs", k = 8) + s(Year, by=mean_z_tmax, k = 8),
+  data = disturbed,
+  method = "REML"
+)
+
+gam.check(mod_fs_d)
+summary(mod_fs_d)
+draw(mod_fs_d)
+
+```
+
+## Polynom - Control
+```{r}
+#| message: false
+#| warning: false
+
+control <- control %>%
+  group_by(subplot) %>%
+  mutate(fitted_poly2 = predict(lm(agb ~ poly(Year, 2), data = cur_data())))%>%
+  ungroup()
+
+
+mod2=lm(agb-fitted_poly2~mean_z_tmax, data=control)
+summary(mod2)
+
+control$resagbPoly=control$agb-control$fitted_poly2
+
+mod_res <- gam(
+  resagbPoly ~ s(Year, by=mean_z_tmax, k = 8),
+  data = control,
+  method = "REML"
+)
+
+gam.check(mod_res)
+
+summary(mod_res)
+
+draw(mod_res)
+```
+
+## Polynom - Disturbed
+
+```{r}
+#| message: false
+#| warning: false
+
+
+disturbed <- disturbed %>%
+  group_by(subplot) %>%
+  mutate(fitted_poly2 = predict(lm(agb ~ poly(Year, 2), data = cur_data())))%>%
+  ungroup()
+
+
+mod2=lm(agb-fitted_poly2~mean_z_tmax, data=disturbed)
+summary(mod2)
+
+disturbed$resagbPoly=disturbed$agb-disturbed$fitted_poly2
+
+#LOESS smooth (span = 0.5) captured nearly all the temporal variation in AGB, leaving small residuals
+#there’s very little structure left to explain — essentially just noise around each subplot’s recovery curve.
+
+
+
+mod_res <- gam(
+  resagbPoly ~ s(Year, by=mean_z_tmax, k = 8),
+  data = disturbed,
+  method = "REML"
+)
+
+gam.check(mod_res)
+
+summary(mod_res)
+
+#deviance explained is only 14%, not 99.9%.
+
+draw(mod_res)
+```
+
+## LOESS - Control
+
+```{r}
+#| message: false
+#| warning: false
+
+
+control <- control %>%
+  group_by(subplot) %>%
+  mutate(fitted_LOESS0.5 = predict(loess(agb ~ Year,
+                                         data = cur_data(),
+                                         span = 0.5)))%>%
+  ungroup()
+
+
+
+mod2=lm(agb-fitted_LOESS0.5~mean_z_tmax, data=control)
+summary(mod2)
+
+control$resagbLOESS=control$agb-control$fitted_LOESS0.5
+
+
+mod_res <- gam(
+  resagbLOESS ~ s(Year, by=mean_z_tmax, k = 8),
+  data = control,
+  method = "REML"
+)
+
+gam.check(mod_res)
+
+summary(mod_res)
+
+draw(mod_res)
+```
+
+## LOESS - Disturbed
+
+
+```{r}
+#| message: false
+#| warning: false
+
+disturbed <- disturbed %>%
+  group_by(subplot) %>%
+  mutate(fitted_LOESS0.5 = predict(loess(agb ~ Year,
+                                         data = cur_data(),
+                                         span = 0.5)))%>%
+  ungroup()
+
+
+
+mod2=lm(agb-fitted_LOESS0.5~mean_z_tmax, data=disturbed)
+summary(mod2)
+
+disturbed$resagbLOESS=disturbed$agb-disturbed$fitted_LOESS0.5
+
+
+mod_res <- gam(
+  resagbLOESS ~ s(Year, by=mean_z_tmax, k = 8),
+  data = disturbed,
+  method = "REML"
+)
+
+gam.check(mod_res)
+
+summary(mod_res)
+
+draw(mod_res)
+```
+
+
