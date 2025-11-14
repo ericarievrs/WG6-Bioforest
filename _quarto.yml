@@ -12,6 +12,8 @@ website:
         menu:
           - text: "smoothing"
             href: analyses/test2.html
+          - text: "test3"
+            href: analyses/test3.html
     right:
       - icon: github
         href: https://github.com/ericarievrs/WG6-Bioforest
