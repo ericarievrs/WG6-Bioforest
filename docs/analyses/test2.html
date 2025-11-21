@@ -3870,6 +3870,14 @@ vertical-align: -.125em;
     <a class="dropdown-item" href="../analyses/test3.html">
  <span class="dropdown-text">full models</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../analyses/smooth_agb_growth.html">
+ <span class="dropdown-text">smoothing agb_growth</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../analyses/models_agb_growth.html">
+ <span class="dropdown-text">full models agb_growth</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -4639,167 +4647,25 @@ vertical-align: -.125em;
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;^fitted_&quot;</span>, <span class="fu">names</span>(merged), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> vars) {</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(v, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">as.formula</span>(<span class="fu">paste0</span>(v, <span class="st">&quot; - agb ~ Year&quot;</span>)), <span class="at">data =</span> merged)))</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>fitted_GAM5 
-
-Call:
-lm(formula = as.formula(paste0(v, &quot; - agb ~ Year&quot;)), data = merged)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--19.7826  -1.5386   0.0288   1.5943  24.5216 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -4.301e-10  1.981e+01       0        1
-Year         2.145e-13  9.884e-03       0        1
-
-Residual standard error: 3.122 on 1078 degrees of freedom
-Multiple R-squared:  4.37e-25,  Adjusted R-squared:  -0.0009276 
-F-statistic: 4.71e-22 on 1 and 1078 DF,  p-value: 1
-
-fitted_GAM8 
-
-Call:
-lm(formula = as.formula(paste0(v, &quot; - agb ~ Year&quot;)), data = merged)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--19.3003  -1.2085   0.0118   1.2700  21.6383 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -1.660e-10  1.563e+01       0        1
-Year        -5.467e-15  7.799e-03       0        1
-
-Residual standard error: 2.463 on 1078 degrees of freedom
-Multiple R-squared:  4.574e-28, Adjusted R-squared:  -0.0009276 
-F-statistic: 4.931e-25 on 1 and 1078 DF,  p-value: 1
-
-fitted_GAM8_fs 
-
-Call:
-lm(formula = as.formula(paste0(v, &quot; - agb ~ Year&quot;)), data = merged)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--19.8717  -1.2210   0.0285   1.2070  19.7042 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)  4.448e-02  1.517e+01   0.003    0.998
-Year        -2.219e-05  7.569e-03  -0.003    0.998
-
-Residual standard error: 2.39 on 1078 degrees of freedom
-Multiple R-squared:  7.972e-09, Adjusted R-squared:  -0.0009276 
-F-statistic: 8.594e-06 on 1 and 1078 DF,  p-value: 0.9977
-
-fitted_slide_complete 
-
-Call:
-lm(formula = as.formula(paste0(v, &quot; - agb ~ Year&quot;)), data = merged)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--20.3885  -1.5966   0.0332   1.6866  21.1788 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 133.00332   27.66810   4.807 1.81e-06 ***
-Year         -0.06632    0.01380  -4.804 1.84e-06 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 3.1 on 838 degrees of freedom
-  (240 observations deleted due to missingness)
-Multiple R-squared:  0.0268,    Adjusted R-squared:  0.02564 
-F-statistic: 23.08 on 1 and 838 DF,  p-value: 1.841e-06
-
-fitted_slide_completeYear 
-
-Call:
-lm(formula = as.formula(paste0(v, &quot; - agb ~ Year&quot;)), data = merged)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--19.4972  -1.2538  -0.0196   1.1189  25.8282 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)  0.3529398 19.7132769   0.018    0.986
-Year        -0.0002095  0.0098310  -0.021    0.983
-
-Residual standard error: 2.461 on 898 degrees of freedom
-  (180 observations deleted due to missingness)
-Multiple R-squared:  5.057e-07, Adjusted R-squared:  -0.001113 
-F-statistic: 0.0004541 on 1 and 898 DF,  p-value: 0.983
-
-fitted_slide 
-
-Call:
-lm(formula = as.formula(paste0(v, &quot; - agb ~ Year&quot;)), data = merged)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--20.5204  -1.6756   0.0785   1.7613  21.0656 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 170.39575   20.63362   8.258 4.29e-16 ***
-Year         -0.08502    0.01029  -8.259 4.25e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 3.251 on 1078 degrees of freedom
-Multiple R-squared:  0.05952,   Adjusted R-squared:  0.05864 
-F-statistic: 68.22 on 1 and 1078 DF,  p-value: 4.252e-16
-
-fitted_poly2 
-
-Call:
-lm(formula = as.formula(paste0(v, &quot; - agb ~ Year&quot;)), data = merged)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--21.1473  -2.1335   0.0068   2.3291  26.4431 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -9.390e-11  2.668e+01       0        1
-Year         4.689e-14  1.331e-02       0        1
-
-Residual standard error: 4.203 on 1078 degrees of freedom
-Multiple R-squared:  1.153e-26, Adjusted R-squared:  -0.0009276 
-F-statistic: 1.243e-23 on 1 and 1078 DF,  p-value: 1</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;^fitted_&quot;</span>, <span class="fu">names</span>(merged), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> vars,</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">intercept =</span> <span class="cn">NA</span>,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">slope =</span> <span class="cn">NA</span>,</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value =</span> <span class="cn">NA</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(vars)) {</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> vars[i]</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">as.formula</span>(<span class="fu">paste0</span>(v, <span class="st">&quot; - agb ~ Year&quot;</span>)), <span class="at">data =</span> merged)</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>intercept[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(s)[<span class="dv">1</span>, <span class="dv">1</span>]</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>slope[i]     <span class="ot">&lt;-</span> <span class="fu">coef</span>(s)[<span class="dv">2</span>, <span class="dv">1</span>]</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>p_value[i]   <span class="ot">&lt;-</span> <span class="fu">coef</span>(s)[<span class="dv">2</span>, <span class="dv">4</span>]</span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> vars,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">intercept =</span> <span class="cn">NA</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">slope =</span> <span class="cn">NA</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value =</span> <span class="cn">NA</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(vars)) {</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> vars[i]</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">as.formula</span>(<span class="fu">paste0</span>(v, <span class="st">&quot; - agb ~ Year&quot;</span>)), <span class="at">data =</span> merged)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>intercept[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(s)[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>slope[i]     <span class="ot">&lt;-</span> <span class="fu">coef</span>(s)[<span class="dv">2</span>, <span class="dv">1</span>]</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>p_value[i]   <span class="ot">&lt;-</span> <span class="fu">coef</span>(s)[<span class="dv">2</span>, <span class="dv">4</span>]</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     method     intercept         slope      p_value
@@ -4818,35 +4684,35 @@ F-statistic: 1.243e-23 on 1 and 1078 DF,  p-value: 1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>methods <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_GAM5&quot;</span>,</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_GAM8&quot;</span>,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_GAM8_fs&quot;</span>,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_slide&quot;</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_slide_completeYear&quot;</span>,</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_slide_complete&quot;</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_poly2&quot;</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (m <span class="cf">in</span> methods) {</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  merged[[<span class="fu">paste0</span>(<span class="st">&quot;resid_&quot;</span>, m)]] <span class="ot">&lt;-</span> merged<span class="sc">$</span>agb <span class="sc">-</span> merged[[m]]</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>pairwise_corr <span class="ot">&lt;-</span> <span class="cf">function</span>(df, col) {</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  wide <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(df[, <span class="fu">c</span>(<span class="st">&quot;subplot&quot;</span>,<span class="st">&quot;Year&quot;</span>, col)],</span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>                             <span class="at">names_from =</span> subplot, <span class="at">values_from =</span> <span class="fu">all_of</span>(col))</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  M <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(wide[, <span class="sc">-</span><span class="dv">1</span>])          <span class="co"># remove Year</span></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">cor</span>(M, <span class="at">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>)</span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(C[<span class="fu">upper.tri</span>(C)], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>temporal_signal <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> methods,</span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_pairwise_corr =</span> <span class="fu">sapply</span>(<span class="fu">paste0</span>(<span class="st">&quot;resid_&quot;</span>, methods),</span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>                              <span class="cf">function</span>(x) <span class="fu">pairwise_corr</span>(merged, x))</span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>temporal_signal</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>methods <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_GAM5&quot;</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_GAM8&quot;</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_GAM8_fs&quot;</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_slide&quot;</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_slide_completeYear&quot;</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_slide_complete&quot;</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fitted_poly2&quot;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (m <span class="cf">in</span> methods) {</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  merged[[<span class="fu">paste0</span>(<span class="st">&quot;resid_&quot;</span>, m)]] <span class="ot">&lt;-</span> merged<span class="sc">$</span>agb <span class="sc">-</span> merged[[m]]</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>pairwise_corr <span class="ot">&lt;-</span> <span class="cf">function</span>(df, col) {</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  wide <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(df[, <span class="fu">c</span>(<span class="st">&quot;subplot&quot;</span>,<span class="st">&quot;Year&quot;</span>, col)],</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>                             <span class="at">names_from =</span> subplot, <span class="at">values_from =</span> <span class="fu">all_of</span>(col))</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  M <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(wide[, <span class="sc">-</span><span class="dv">1</span>])          <span class="co"># remove Year</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">cor</span>(M, <span class="at">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(C[<span class="fu">upper.tri</span>(C)], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>temporal_signal <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> methods,</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_pairwise_corr =</span> <span class="fu">sapply</span>(<span class="fu">paste0</span>(<span class="st">&quot;resid_&quot;</span>, methods),</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>                              <span class="cf">function</span>(x) <span class="fu">pairwise_corr</span>(merged, x))</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>temporal_signal</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                   method mean_pairwise_corr

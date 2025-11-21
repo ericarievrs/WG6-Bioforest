@@ -14,6 +14,10 @@ website:
             href: analyses/test2.html
           - text: "full models"
             href: analyses/test3.html
+          - text: "smoothing agb_growth"
+            href: analyses/smooth_agb_growth.html
+          - text: "full models agb_growth"
+            href: analyses/models_agb_growth.html
     right:
       - icon: github
         href: https://github.com/ericarievrs/WG6-Bioforest
