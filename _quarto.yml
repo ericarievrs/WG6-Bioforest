@@ -18,6 +18,10 @@ website:
             href: analyses/smooth_agb_growth.html
           - text: "full models agb_growth"
             href: analyses/models_agb_growth.html
+          - text: "smoothing agb_gain"
+            href: analyses/smooth_agb_gain.html
+          - text: "full models agb_gain"
+            href: analyses/models_agb_gain.html
     right:
       - icon: github
         href: https://github.com/ericarievrs/WG6-Bioforest
