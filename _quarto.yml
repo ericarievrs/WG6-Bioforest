@@ -10,18 +10,9 @@ website:
         href: index.html
       - text: "Analyses"
         menu:
-          - text: "smoothing AGB"
-            href: analyses/test2.html
-          - text: "full models AGB"
-            href: analyses/test3.html
           - text: "smoothing agb_growth"
-            href: analyses/smooth_agb_growth.html
-          - text: "full models agb_growth"
-            href: analyses/models_agb_growth.html
-          - text: "smoothing agb_gain"
-            href: analyses/smooth_agb_gain.html
-          - text: "full models agb_gain"
-            href: analyses/models_agb_gain.html
+            href: analyses/smooth_final_models.html
+
     right:
       - icon: github
         href: https://github.com/ericarievrs/WG6-Bioforest
