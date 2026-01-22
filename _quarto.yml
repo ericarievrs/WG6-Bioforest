@@ -11,7 +11,7 @@ website:
       - text: "Analyses"
         menu:
           - text: "smoothing agb_growth"
-            href: analyses/smooth_final_models.html
+            href: analyses/smooth_final_models_allsites_v2.html
 
     right:
       - icon: github
