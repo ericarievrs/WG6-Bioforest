@@ -10,8 +10,8 @@ website:
         href: index.html
       - text: "Analyses"
         menu:
-          - text: "smoothing agb_growth"
-            href: analyses/smooth_final_models_allsites_v2.html
+          - text: "BAM agb_growth"
+            href: analyses/smooth_final_models_allsites_allvariables.html
 
     right:
       - icon: github
