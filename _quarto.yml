@@ -11,7 +11,7 @@ website:
       - text: "Analyses"
         menu:
           - text: "BAM agb_growth"
-            href: analyses/smooth_final_models_allsites_allvariables.html
+            href: analyses/smooth_final_models_allsites_DAG_agb_gain.html
 
     right:
       - icon: github
