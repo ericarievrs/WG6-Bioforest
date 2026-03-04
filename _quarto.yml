@@ -10,7 +10,7 @@ website:
         href: index.html
       - text: "Analyses"
         menu:
-          - text: "BAM agb_growth"
+          - text: "BAM agb_gain"
             href: analyses/smooth_final_models_allsites_DAG_agb_gain.html
 
     right:
